@@ -1,0 +1,44 @@
+{
+  "id": "/sistema_tools/dashboard",
+  "name": "EJECUTTRANS · Sistema Tools",
+  "short_name": "Sistema Tools",
+  "description": "Herramientas para reportes de pasajeros y rotativos de EJECUTTRANS",
+  "lang": "es-EC",
+  "start_url": "/sistema_tools/dashboard",
+  "scope": "/sistema_tools/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f7fb",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "/sistema_tools/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/sistema_tools/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Herramientas",
+      "url": "/sistema_tools/dashboard",
+      "description": "Catálogo de herramientas"
+    },
+    {
+      "name": "Rotativos a CSV",
+      "url": "/sistema_tools/rotativos",
+      "description": "Generar rotativos CSV"
+    },
+    {
+      "name": "Pasajeros",
+      "url": "/sistema_tools/pasajeros",
+      "description": "Reportes de pasajeros"
+    }
+  ]
+}

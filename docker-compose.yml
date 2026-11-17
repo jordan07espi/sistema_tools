@@ -1,0 +1,72 @@
+# EJECUTTRANS - SISTEMA TOOLS
+# Configuración directa en Docker Compose, al estilo de sistema_minutos.
+# Puertos diferentes para ejecutar ambos sistemas simultáneamente.
+services:
+  db:
+    image: mysql:8.4
+    container_name: sistema_tools_db
+    restart: unless-stopped
+    command: --default-time-zone=-05:00
+    environment:
+      MYSQL_ROOT_PASSWORD: "tools.2026*"
+      MYSQL_DATABASE: sistema_tools_db
+      TZ: America/Guayaquil
+    ports:
+      - "127.0.0.1:3309:3306"
+    volumes:
+      - sistema_tools_db_data:/var/lib/mysql
+      # Solo se ejecutan la primera vez, cuando el volumen de MySQL está vacío.
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/seed_permissions.sql:/docker-entrypoint-initdb.d/02_seed_permissions.sql:ro
+      - ./database/seed_admin.sql:/docker-entrypoint-initdb.d/03_seed_admin.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h localhost -u root -p"$$MYSQL_ROOT_PASSWORD" --silent']
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  web:
+    build: .
+    container_name: sistema_tools_php
+    environment:
+      TOOLS_BASE_PATH: ""
+      TOOLS_DB_HOST: db
+      TOOLS_DB_DBNAME: sistema_tools_db
+      TOOLS_DB_USERNAME: root
+      TOOLS_DB_PASSWORD: "tools.2026*"
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8083:80"
+    # Mantiene el código editable desde Windows, sin ocultar vendor/ de Composer.
+    volumes:
+      - ./app:/var/www/html/app
+      - ./Config:/var/www/html/Config
+      - ./Assets:/var/www/html/Assets:ro
+      - ./public:/var/www/html/public
+      - ./database:/var/www/html/database
+      - ./bin:/var/www/html/bin
+      - ./tests:/var/www/html/tests
+      - ./storage:/var/www/html/storage
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c 'php bin/sync_assets.php && php bin/upgrade_routes.php && php bin/disable_forced_password_change.php && apache2-foreground'
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sistema_tools_pma
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: "tools.2026*"
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "127.0.0.1:8084:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  sistema_tools_db_data:

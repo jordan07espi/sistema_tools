@@ -1,0 +1,7 @@
+<?php use App\Core\Http; ?>
+<div class="bg-white border border-slate-200 rounded-2xl p-5 md:p-8 shadow-sm max-w-5xl mx-auto"><h2 class="font-bold text-lg mb-1 text-center">Reportes y exportaciones</h2><p class="text-sm text-slate-500 mb-6 text-center">Se muestran las 150 exportaciones más recientes a las que tienes acceso.</p>
+<?php if (!$files): ?><p class="text-slate-500 text-sm">Aún no existen archivos disponibles para tu usuario.</p><?php endif; ?>
+<div class="hidden md:block overflow-x-auto"><table class="w-full text-sm"><thead class="bg-slate-100"><tr><th>Archivo</th><th>Módulo</th><th>Generado</th><th>Autor</th><th></th></tr></thead><tbody>
+<?php foreach($files as $f):?><tr class="border-b"><td><?=Http::e($f['filename'])?></td><td><?=Http::e($f['module'])?></td><td><?=Http::e($f['created_at'])?></td><td><?=Http::e($f['apellidos'].' '.$f['nombres'])?></td><td><a class="text-blue-800 font-bold" href="<?=Http::e(Http::url('/archivos/'.(int)$f['id']))?>">Descargar</a></td></tr><?php endforeach;?></tbody></table></div>
+<div class="md:hidden space-y-3"><?php foreach($files as $f):?><article class="border rounded-lg p-4"><p class="font-semibold break-words"><?=Http::e($f['filename'])?></p><p class="text-xs text-slate-500 mt-2"><?=Http::e($f['module'])?> · <?=Http::e($f['created_at'])?></p><a class="download-link mt-3" href="<?=Http::e(Http::url('/archivos/'.(int)$f['id']))?>">Descargar</a></article><?php endforeach;?></div>
+</div>

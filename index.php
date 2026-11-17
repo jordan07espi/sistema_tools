@@ -1,0 +1,49 @@
+<?php
+declare(strict_types=1);
+require __DIR__.'/vendor/autoload.php';
+$appConfig = require __DIR__.'/Config/app.php';
+date_default_timezone_set($appConfig['timezone']);
+use App\Core\{Auth,Http,Files};
+use App\Controllers\{AuthController,PassengerController,RotativoController,UserController,HistoryController,RouteController};
+ini_set('session.use_strict_mode','1');
+$secure=!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=='off';
+session_name('EJECUTTRANS_SESSION');
+session_set_cookie_params(['lifetime'=>0,'path'=>Http::basePath().'/','secure'=>$secure,'httponly'=>true,'samesite'=>'Lax']);
+session_start();
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('Referrer-Policy: same-origin');
+header('Content-Security-Policy: default-src \'self\'; style-src \'self\' https://cdnjs.cloudflare.com \'unsafe-inline\'; script-src \'self\'; img-src \'self\' data:; font-src \'self\' https://cdnjs.cloudflare.com; connect-src \'self\';');
+header('Cache-Control: private, no-store');
+$limit=max(300, (int)$appConfig['session_idle_seconds']);
+if (!empty($_SESSION['user_id']) && isset($_SESSION['last_activity']) && time()-$_SESSION['last_activity']>$limit) Auth::logout();
+if (!empty($_SESSION['user_id']))$_SESSION['last_activity']=time();
+$path=Http::requestPath();
+$method=Http::method();
+try {
+    if ($method==='GET'&&$path==='/')Http::redirect(Auth::user()?'/dashboard':'/login');
+    if ($method==='GET'&&$path==='/login')AuthController::login();
+    elseif ($method==='POST'&&$path==='/login')AuthController::authenticate();
+    elseif ($method==='POST'&&$path==='/logout')AuthController::logout();
+    elseif ($method==='GET'&&$path==='/password')AuthController::passwordView();
+    elseif ($method==='POST'&&$path==='/password')AuthController::updatePassword();
+    elseif ($method==='GET'&&$path==='/dashboard'){
+        Auth::requireLogin();Http::view('dashboard/index',['title'=>'Panel principal']);
+    }
+    elseif ($method==='GET'&&$path==='/pasajeros')PassengerController::index();
+    elseif ($method==='POST'&&$path==='/pasajeros/generar')PassengerController::generate();
+    elseif ($method==='GET'&&$path==='/rotativos')RotativoController::index();
+    elseif ($method==='GET'&&$path==='/rutas')RouteController::index();
+    elseif ($method==='POST'&&$path==='/rutas/guardar')RouteController::save();
+    elseif ($method==='POST'&&$path==='/rutas/regla')RouteController::saveRule();
+    elseif ($method==='POST'&&$path==='/rotativos/generar')RotativoController::generate();
+    elseif ($method==='GET'&&preg_match('~^/archivos/(\d+)$~',$path,$m))Files::download((int)$m[1]);
+    elseif ($method==='GET'&&$path==='/historial')HistoryController::index();
+    elseif ($method==='GET'&&$path==='/usuarios')UserController::index();
+    elseif ($method==='POST'&&$path==='/usuarios/crear')UserController::create();
+    elseif ($method==='POST'&&$path==='/usuarios/actualizar')UserController::update();
+    elseif ($method==='POST'&&$path==='/usuarios/reset')UserController::reset();
+    elseif ($method==='GET'&&$path==='/permisos')UserController::permissions();
+    elseif ($method==='POST'&&$path==='/permisos')UserController::savePermissions();
+    else Http::abort(404,'Página no encontrada.');
+} catch (\Throwable $e) {error_log((string)$e);Http::abort(500,'Error interno. Revisa los registros del servidor.');}

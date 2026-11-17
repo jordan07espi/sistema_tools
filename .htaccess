@@ -1,0 +1,17 @@
+Options -Indexes
+DirectoryIndex index.php
+AddType application/manifest+json .webmanifest
+
+RewriteEngine On
+RewriteBase /sistema_tools/
+
+# 1. Protege código PHP y archivos internos (Se retiró la restricción que bloqueaba los estilos)
+RewriteRule ^(app|Config|bin|database|storage|vendor|tests)(/|$) - [F,L,NC]
+RewriteRule (^|/)\. - [F,L]
+RewriteRule ^(composer\.(json|lock)|Dockerfile|docker-compose.*|.*\.(sql|log|bak|ini|sh|md|txt|jsonl))$ - [F,L,NC]
+RewriteRule ^(?!index\.php$).+\.php$ - [F,L,NC]
+
+# 2. Enrutador MVC: Sirve recursos públicos directamente, envía el resto a index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

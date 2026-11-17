@@ -1,0 +1,10 @@
+Options -Indexes
+RewriteEngine On
+# Redirige enlaces locales guardados con el prefijo del hosting.
+RewriteRule ^sistema_tools(?:/(.*))?$ /$1 [R=308,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Reconocimiento del manifiesto PWA en Apache.
+AddType application/manifest+json .webmanifest
