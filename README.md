@@ -1,3 +1,16 @@
+# Actualización de Rotativos a CSV — 18/11/2026
+
+- Adaptada la lógica de `App_Rotativo.py`: línea 18 con los nombres `LINEA 18 VIA QUEVEDO KM8 - TERMINAL T.` y `LINEA 18 TERMINAL T. - VIA QUEVEDO KM8`. Los nombres antiguos con KM 7/8 siguen siendo compatibles.
+- Ambos sentidos se exportan en `LINEA 18.csv`, en ese orden. El segundo bloque comienza después del último turno del primero, incluyendo P/RH: con 15 + 13 posiciones, los Tabs llegan a 28. Una cantidad diferente genera una advertencia, sin inventar buses.
+- Incorporada `LINEA 19 BY PASS`, con numeración consecutiva desde 1 para los buses válidos (3 turnos en el nuevo cuadro). No se limita artificialmente el número de buses.
+- Como en el Python entregado, las líneas 18 y 19 usan códigos operativos incorporados: L18LV/L18S/L18D y L19LV/L19S/L19D; codRuta L18 y L19. Estos códigos tienen prioridad sobre el catálogo. Las demás rutas mantienen los códigos configurables y las reglas SDF/SF/DF existentes.
+- El Excel de códigos proporcionado no tiene códigos de fin de semana para la línea 19; se usan L19S y L19D definidos en el Python actualizado.
+- Para actualizar otra instalación existente: sustituir el código y ejecutar `docker compose exec -T web php bin/upgrade_rotatives.php`. También se ejecuta automáticamente desde `bin/upgrade_routes.php` al arrancar el contenedor. No es necesario volver a importar el volcado SQL.
+- La migración `database/rotatives_20261118.sql` renombra las rutas, incorpora la 19 y actualiza los miembros de la unificación. El ejecutor utiliza una transacción y registra la versión en `tools_migrations`, por lo que no repite los cambios en reinicios posteriores.
+- Validado en Docker/PHP y MySQL local: `php tests/rotatives_update.php` (alias, numeración, reservas, fines de semana, cambio de año y reglas anteriores) y `php tests/rotatives_database.php` (catálogo, lectura XLSX y ZIP semanal de 14 CSV con datos sintéticos). La segunda prueba requiere la migración aplicada. Falta contrastar un rotativo operativo actualizado, que no se adjuntó a esta solicitud.
+
+---
+
 # Corrección 30/10/2026 — Exportación Excel y diseño del informe
 
 **Causa confirmada del error 5297E1D3:** `Worksheet\SheetView` no tiene `setShowGridLines()`; ahora la llamada es `Worksheet::setShowGridlines(false)`. La constante `PageSetup::PAPERSIZE_A4` también se mantiene correctamente como entero.

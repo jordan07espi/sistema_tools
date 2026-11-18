@@ -6,9 +6,16 @@ final class RotativoService {
     private const DAYS=['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO','DOMINGO'];
     private const MONTHS=['ENERO'=>1,'FEBRERO'=>2,'MARZO'=>3,'ABRIL'=>4,'MAYO'=>5,'JUNIO'=>6,'JULIO'=>7,'AGOSTO'=>8,'SEPTIEMBRE'=>9,'OCTUBRE'=>10,'NOVIEMBRE'=>11,'DICIEMBRE'=>12];
     private const UNIFIED_18=[
-        'LINEA 18.- VIA QUEVEDO KM 7/8 - TERMINAL TERRESTRE',
-        'LINEA 18.- TERMINAL TERRESTRE - VIA QUEVEDO KM 7/8',
+        'LINEA 18 VIA QUEVEDO KM8 - TERMINAL T.',
+        'LINEA 18 TERMINAL T. - VIA QUEVEDO KM8',
     ];
+    private static function canonicalRoute(string $route): string {
+        return match(self::norm($route)) {
+            'LINEA 18.- VIA QUEVEDO KM 7/8 - TERMINAL TERRESTRE'=>self::UNIFIED_18[0],
+            'LINEA 18.- TERMINAL TERRESTRE - VIA QUEVEDO KM 7/8'=>self::UNIFIED_18[1],
+            default=>self::norm($route),
+        };
+    }
     public static function norm(mixed $text): string { return PassengerService::normalized($text); }
     public static function header(mixed $text): string {return trim(preg_replace('/[^A-Z0-9]+/',' ',self::norm($text)));}
     public static function code(mixed $value): string { return preg_replace('/\s+/u','',trim((string)$value)); }
@@ -142,7 +149,7 @@ final class RotativoService {
         $map=self::mapCodes($codeRows);$routes=[];
         $groups=$dbConfig['groups']??['LINEA 18'=>['filename'=>'LINEA 18.csv', 'routes'=>array_map([self::class,'norm'],self::UNIFIED_18)]];
         $memberToGroup=[];
-        foreach($groups as $groupName=>$info)foreach($info['routes'] as $routeName)$memberToGroup[self::norm($routeName)]=$groupName;
+        foreach($groups as $groupName=>$info)foreach($info['routes'] as $routeName)$memberToGroup[self::canonicalRoute($routeName)]=$groupName;
         foreach ($rows as $index=>$row) {
             $route=trim((string)($row[0]??''));
             if (str_starts_with(self::norm($route),'LINEA'))$routes[]=['index'=>$index,'route'=>$route];
@@ -150,7 +157,13 @@ final class RotativoService {
         if (!$routes)throw new \RuntimeException('No se encontraron rutas que inicien con LINEA en Hoja1.');
         $col=array_search($day,self::DAYS,true)*2;$busCol=$col+1;$files=[];$unified=[];
         foreach ($routes as $i=>$info) {
-            $name=$info['route'];$id=self::norm($name);$rule=$map[$id]??null;
+            $name=$info['route'];$id=self::canonicalRoute($name);$rule=$map[self::norm($name)]??$map[$id]??null;
+            // Python actualizado: códigos incorporados para ambas líneas, incluso
+            // cuando el catálogo todavía contiene nombres o códigos anteriores.
+            if (preg_match('/^LINEA (18|19)(?:\s|\.|-|$)/',self::norm($name),$line)) {
+                $prefix='L'.$line[1];
+                $rule=['codigo'=>$prefix.'LV','sdf'=>'','sf'=>$prefix.'S','df'=>$prefix.'D','codRuta'=>$prefix];
+            }
             if (!$rule){$warnings[]="{$name}: no está configurada en el catálogo de rutas.";continue;}
             if ($rule['codRuta']===''){$warnings[]="{$name}: sin codRuta.";continue;}
             [$code,$horario]=self::codeForDay($rule,$day);
@@ -174,7 +187,7 @@ final class RotativoService {
         foreach($groups as $groupName=>$config){
             $blocks=[];$missing=[];
             foreach($config['routes'] as $name){
-                $key=self::norm($name);
+                $key=self::canonicalRoute($name);
                 if(isset($unified[$groupName][$key]))$blocks[]=$unified[$groupName][$key];
                 else $missing[]=$name;
             }
@@ -187,6 +200,7 @@ final class RotativoService {
                 foreach($block['records'] as $record){$record['tab']=$offset+$record['local'];$combined[]=$record;}
                 $offset+=$block['max_turn'];
             }
+            if ($groupName==='LINEA 18' && $offset!==28)$warnings[]="LINEA 18 debería tener 28 turnos, pero el rotativo contiene {$offset}.";
             $filename=basename((string)($config['filename']??($groupName.'.csv')));
             if($combined)$files[$filename]=self::csv($date,$blocks[0]['horario'],$blocks[0]['code'],$combined);
             else $warnings[]=$groupName.': sin buses válidos.';

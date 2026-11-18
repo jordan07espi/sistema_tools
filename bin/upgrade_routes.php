@@ -14,3 +14,4 @@ foreach (['database/routes_schema.sql','database/routes_seed.sql'] as $file){
     if($file==='database/routes_seed.sql')$pdo->exec("INSERT IGNORE INTO role_permissions(role,permission) VALUES ('monitoreo','routes.view')");
 }
 echo "Catálogo de rutas listo (sin sobrescribir rutas existentes).\n";
+require __DIR__.'/upgrade_rotatives.php';
