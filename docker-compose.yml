@@ -42,6 +42,7 @@ services:
     volumes:
       - ./app:/var/www/html/app
       - ./Config:/var/www/html/Config
+      - ./Config/uploads.ini:/usr/local/etc/php/conf.d/zz-uploads.ini:ro
       - ./Assets:/var/www/html/Assets:ro
       - ./public:/var/www/html/public
       - ./database:/var/www/html/database

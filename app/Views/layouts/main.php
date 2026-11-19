@@ -7,7 +7,8 @@ $current = Http::requestPath();
 $isHome = $current === '/dashboard';
 $canPassengers = !$isGuest && Auth::can('passengers.view');
 $canRotatives = !$isGuest && Auth::can('rotatives.view');
-$canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotatives.download'));
+$canFleets = !$isGuest && Auth::can('fleets.view');
+$canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotatives.download') || Auth::can('fleets.download'));
 ?>
 <!doctype html>
 <html lang="es"><head>
@@ -44,6 +45,7 @@ $canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotat
       <p class="admin-nav-heading">Panel de control</p>
       <a href="<?=Http::e(Http::url('/dashboard'))?>" class="min-nav <?= $current === '/dashboard' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-gauge-high w-6 text-center"></i> Inicio</a>
       <p class="admin-nav-heading">Herramientas</p>
+      <?php if ($canFleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>" class="min-nav <?= $current === '/flotas' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-chart-column w-6 text-center"></i> Promedios de flotas</a><?php endif; ?>
       <?php if ($canPassengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>" class="min-nav <?= $current === '/pasajeros' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-chart-column w-6 text-center"></i> Reporte de pasajeros</a><?php endif; ?>
       <?php if ($canRotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>" class="min-nav <?= $current === '/rotativos' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-bus w-6 text-center"></i> Rotativos a CSV</a><?php endif; ?>
       <p class="admin-nav-heading">Administración</p>
@@ -74,6 +76,7 @@ $canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotat
   <div class="portal-header-inner">
     <a class="portal-brand" href="<?=Http::e(Http::url('/dashboard'))?>" aria-label="Inicio de Sistema Tools"><span class="portal-brand-mark"><i class="fa-solid fa-layer-group"></i></span><span>EJECUTTRANS <strong>TOOLS</strong></span></a>
     <nav class="portal-desktop-nav" aria-label="Herramientas">
+      <?php if ($canFleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>" class="<?= $current === '/flotas' ? 'portal-nav-active' : '' ?>">Promedios de flotas</a><?php endif; ?>
       <a href="<?=Http::e(Http::url('/dashboard'))?>" class="<?= $isHome ? 'portal-nav-active' : '' ?>">Todas las herramientas</a>
       <?php if ($canPassengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>" class="<?= $current === '/pasajeros' ? 'portal-nav-active' : '' ?>">Reporte de pasajeros</a><?php endif; ?>
       <?php if ($canRotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>" class="<?= $current === '/rotativos' ? 'portal-nav-active' : '' ?>">Rotativos a CSV</a><?php endif; ?>
@@ -83,7 +86,7 @@ $canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotat
       <details class="portal-account-details"><summary aria-label="Opciones de mi cuenta"><i class="fa-regular fa-circle-user mr-1"></i><span class="hidden sm:inline"><?=Http::e(explode(' ',trim($user['nombres'] ?? 'Usuario'))[0])?></span><i class="fa-solid fa-chevron-down text-xs ml-1"></i></summary>
         <div class="portal-account-menu"><p class="px-4 py-2 text-xs text-gray-500 border-b break-words"><?=Http::e($user['nombres'].' '.$user['apellidos'])?><span class="block"><?=Http::e($user['role'])?></span></p><a href="<?=Http::e(Http::url('/password'))?>"><i class="fa-solid fa-key mr-2"></i>Cambiar contraseña</a><form method="post" action="<?=Http::e(Http::url('/logout'))?>"><input type="hidden" name="_csrf" value="<?=Http::e(Http::csrf())?>"><button type="submit"><i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar sesión</button></form></div>
       </details>
-      <details class="portal-mobile-nav"><summary aria-label="Ver herramientas"><i class="fa-solid fa-bars"></i></summary><nav class="portal-mobile-links"><a href="<?=Http::e(Http::url('/dashboard'))?>">Todas las herramientas</a><?php if ($canPassengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>">Reporte de pasajeros</a><?php endif; ?><?php if ($canRotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>">Rotativos a CSV</a><?php endif; ?><?php if ($canHistory): ?><a href="<?=Http::e(Http::url('/historial'))?>">Mis archivos</a><?php endif; ?></nav></details>
+      <details class="portal-mobile-nav"><summary aria-label="Ver herramientas"><i class="fa-solid fa-bars"></i></summary><nav class="portal-mobile-links"><a href="<?=Http::e(Http::url('/dashboard'))?>">Todas las herramientas</a><?php if ($canFleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>">Promedios de flotas</a><?php endif; ?><?php if ($canPassengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>">Reporte de pasajeros</a><?php endif; ?><?php if ($canRotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>">Rotativos a CSV</a><?php endif; ?><?php if ($canHistory): ?><a href="<?=Http::e(Http::url('/historial'))?>">Mis archivos</a><?php endif; ?></nav></details>
     </div>
   </div>
 </header>
@@ -91,5 +94,6 @@ $canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotat
 <footer class="portal-footer">EJECUTTRANS · Departamento de Tecnologías · Sistema de herramientas</footer>
 <?php endif; ?>
 <script src="<?=Http::e(Http::url('/assets/js/app.js'))?>" defer></script>
+<script src="<?=Http::e(Http::url('/assets/js/uploads.js'))?>" defer></script>
 <?php if (!empty($js)): ?><script src="<?=Http::e(Http::url('/assets/js/'.(string)$js.'.js'))?>" defer></script><?php endif; ?>
 </body></html>

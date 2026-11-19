@@ -5,6 +5,7 @@ $appConfig = require dirname(__DIR__).'/Config/app.php';
 date_default_timezone_set($appConfig['timezone']);
 use App\Core\{Auth,Http,Files};
 use App\Controllers\{AuthController,PassengerController,RotativoController,UserController,HistoryController,RouteController};
+use App\Controllers\FleetAverageController;
 ini_set('session.use_strict_mode','1');
 $secure=!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=='off';
 session_name('EJECUTTRANS_SESSION');
@@ -30,6 +31,8 @@ try {
     elseif ($method==='GET'&&$path==='/dashboard'){
         Auth::requireLogin();Http::view('dashboard/index',['title'=>'Panel principal']);
     }
+    elseif ($method==='GET'&&$path==='/flotas')FleetAverageController::index();
+    elseif ($method==='POST'&&$path==='/flotas/generar')FleetAverageController::generate();
     elseif ($method==='GET'&&$path==='/pasajeros')PassengerController::index();
     elseif ($method==='POST'&&$path==='/pasajeros/generar')PassengerController::generate();
     elseif ($method==='GET'&&$path==='/rotativos')RotativoController::index();

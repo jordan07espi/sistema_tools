@@ -2,7 +2,8 @@
 $isAdmin = Auth::user()['role'] === 'administrador';
 $passengers = Auth::can('passengers.view');
 $rotatives = Auth::can('rotatives.view');
-$history = Auth::can('passengers.download') || Auth::can('rotatives.download');
+$fleets = Auth::can('fleets.view');
+$history = Auth::can('passengers.download') || Auth::can('rotatives.download') || Auth::can('fleets.download');
 ?>
 <?php if ($isAdmin): ?>
 <div class="mb-9 text-center mx-auto max-w-2xl"><p class="text-blue-600 font-bold text-xs uppercase tracking-widest mb-2">Panel de administración</p><h2 class="text-2xl font-extrabold text-gray-900">Bienvenido al Sistema Tools</h2><p class="text-gray-500 mt-2">Administra las herramientas, los códigos de ruta y el personal desde un solo lugar.</p></div>
@@ -13,6 +14,7 @@ $history = Auth::can('passengers.download') || Auth::can('rotatives.download');
 </div>
 <h2 class="mt-10 mb-5 text-lg font-bold text-center">Herramientas operativas</h2>
 <div class="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
+  <?php if ($fleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>" class="tile flex items-center gap-4"><div class="tile-icon bg-blue-100 text-blue-600 shrink-0"><i class="fa-solid fa-chart-column"></i></div><div><h3>Promedios de flotas</h3><p>Cruza planificación y liquidaciones; genera el resumen semanal.</p></div></a><?php endif; ?>
   <?php if ($passengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>" class="tile flex items-center gap-4"><div class="tile-icon bg-emerald-100 text-emerald-600 shrink-0"><i class="fa-solid fa-chart-line"></i></div><div><h3 class="!m-0">Reporte de pasajeros</h3><p>Genera reportes Excel y PDF por período.</p></div><i class="fa-solid fa-arrow-right ml-auto text-gray-400"></i></a><?php endif; ?>
   <?php if ($rotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>" class="tile flex items-center gap-4"><div class="tile-icon bg-orange-100 text-orange-600 shrink-0"><i class="fa-solid fa-bus"></i></div><div><h3 class="!m-0">Rotativos a CSV</h3><p>Crea archivos por ruta desde el cuadro semanal.</p></div><i class="fa-solid fa-arrow-right ml-auto text-gray-400"></i></a><?php endif; ?>
 </div>
@@ -21,11 +23,12 @@ $history = Auth::can('passengers.download') || Auth::can('rotatives.download');
 <section id="tools" class="portal-catalog" aria-labelledby="catalog-title"><div class="portal-catalog-heading"><h2 id="catalog-title">Herramientas disponibles</h2><p>Elige la herramienta que necesitas. Solo se muestran las funciones autorizadas para tu usuario.</p></div>
   <div class="portal-filters" role="group" aria-label="Filtrar herramientas"><button type="button" class="portal-filter active" data-tool-filter="all" aria-pressed="true">Todas</button><button type="button" class="portal-filter" data-tool-filter="reports" aria-pressed="false">Reportes</button><button type="button" class="portal-filter" data-tool-filter="operations" aria-pressed="false">Operaciones</button><button type="button" class="portal-filter" data-tool-filter="files" aria-pressed="false">Mis archivos</button></div>
   <div class="portal-tool-grid">
+    <?php if ($fleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>" class="portal-tool-card" data-tool-category="reports"><div class="portal-tool-icon passengers-icon"><i class="fa-solid fa-chart-column"></i><span class="portal-icon-mini"><i class="fa-solid fa-bus"></i></span></div><h3>Promedios de flotas</h3><p>Calcula pasajeros y promedios por ruta y día desde la planificación y las liquidaciones.</p><span class="portal-tool-arrow"><i class="fa-solid fa-arrow-right"></i></span></a><?php endif; ?>
     <?php if ($passengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>" class="portal-tool-card" data-tool-category="reports"><div class="portal-tool-icon passengers-icon"><i class="fa-solid fa-file-excel"></i><span class="portal-icon-mini"><i class="fa-solid fa-arrow-trend-up"></i></span></div><h3>Reporte de pasajeros</h3><p>Importa el Excel de pasajeros, consulta el período que necesitas y genera reportes en Excel y PDF.</p><span class="portal-tool-arrow"><i class="fa-solid fa-arrow-right"></i></span></a><?php endif; ?>
     <?php if ($rotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>" class="portal-tool-card" data-tool-category="operations"><div class="portal-tool-icon rotatives-icon"><i class="fa-solid fa-bus-simple"></i><span class="portal-icon-mini"><i class="fa-solid fa-file-csv"></i></span></div><h3>Rotativos a CSV</h3><p>Convierte tu cuadro semanal en archivos CSV por ruta. Los códigos están configurados en el sistema.</p><span class="portal-tool-arrow"><i class="fa-solid fa-arrow-right"></i></span></a><?php endif; ?>
     <?php if ($history): ?><a href="<?=Http::e(Http::url('/historial'))?>" class="portal-tool-card" data-tool-category="files"><div class="portal-tool-icon history-icon"><i class="fa-solid fa-folder-open"></i><span class="portal-icon-mini"><i class="fa-solid fa-download"></i></span></div><h3>Mis archivos</h3><p>Consulta y descarga los reportes y archivos de rotativos que tienes autorizados.</p><span class="portal-tool-arrow"><i class="fa-solid fa-arrow-right"></i></span></a><?php endif; ?>
   </div>
-  <?php if (!$passengers && !$rotatives && !$history): ?><div class="portal-empty">Aún no tienes herramientas habilitadas. Comunícate con el administrador.</div><?php endif; ?>
+  <?php if (!$passengers && !$rotatives && !$fleets && !$history): ?><div class="portal-empty">Aún no tienes herramientas habilitadas. Comunícate con el administrador.</div><?php endif; ?>
   <p id="filter-empty" class="portal-empty hidden">No hay herramientas disponibles en esta categoría.</p>
 </section>
 <?php endif; ?>

@@ -5,7 +5,7 @@
 <?php if(Auth::can('passengers.generate')): ?>
 <form id="passengers-form" action="<?=Http::e(Http::url('/pasajeros/generar'))?>" method="post" enctype="multipart/form-data" data-ajax class="space-y-5 max-w-2xl mx-auto">
 <input type="hidden" name="_csrf" value="<?=Http::e(Http::csrf())?>">
-<?php if (!$isAdmin): ?><label class="portal-dropzone" data-file-drop><i class="fa-solid fa-file-excel portal-drop-icon"></i><span class="portal-drop-title">Seleccionar archivo Excel</span><span class="portal-drop-subtitle">O arrastra y suelta aquí tu documento .xlsx o .xlsm</span><span class="portal-file-chosen hidden" data-file-name></span><input type="file" class="sr-only" name="source" accept=".xlsx,.xlsm" required></label><?php else: ?><label class="field">Archivo de origen (.xlsx / .xlsm)<input type="file" class="input" name="source" accept=".xlsx,.xlsm" required></label><?php endif; ?>
+<?php $picker=['name'=>'source','title'=>'Archivo de pasajeros','description'=>'Carga el Excel con los movimientos que deseas consultar.','accept'=>'.xlsx,.xlsm','help'=>'XLSX o XLSM · Un archivo']; require __DIR__.'/../components/file-picker.php'; ?>
 <div class="grid gap-4 sm:grid-cols-2"><label class="field">Tipo de período<select name="type" id="period-type" class="input"><option value="todo">Todo el período</option><option value="anio">Año</option><option value="mes">Mes</option><option value="dia">Día</option></select></label>
 <label class="field period-year hidden">Año<input name="year" type="number" min="2000" max="2100" value="2026" class="input"></label></div>
 <div class="grid gap-4 sm:grid-cols-2">

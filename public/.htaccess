@@ -1,4 +1,10 @@
 Options -Indexes
+LimitRequestBody 0
+<IfModule php_module>
+    php_value upload_max_filesize 0
+    php_value post_max_size 0
+    php_value max_input_time 0
+</IfModule>
 RewriteEngine On
 # Redirige enlaces locales guardados con el prefijo del hosting.
 RewriteRule ^sistema_tools(?:/(.*))?$ /$1 [R=308,L]

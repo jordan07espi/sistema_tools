@@ -10,6 +10,7 @@ WORKDIR /var/www/html
 COPY composer.json ./
 RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 COPY . .
+COPY Config/uploads.ini /usr/local/etc/php/conf.d/zz-uploads.ini
 RUN mkdir -p storage/uploads storage/exports \
     && chown -R www-data:www-data storage \
     && sed -ri 's!DocumentRoot /var/www/html!DocumentRoot /var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \

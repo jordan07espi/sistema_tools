@@ -1,4 +1,10 @@
 Options -Indexes
+LimitRequestBody 0
+<IfModule php_module>
+    php_value upload_max_filesize 0
+    php_value post_max_size 0
+    php_value max_input_time 0
+</IfModule>
 DirectoryIndex index.php
 AddType application/manifest+json .webmanifest
 

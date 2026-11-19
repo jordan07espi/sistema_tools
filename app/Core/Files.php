@@ -3,10 +3,10 @@ declare(strict_types=1);
 namespace App\Core;
 final class Files {
     public static function root(): string { return dirname(__DIR__,2).'/storage'; }
-    public static function upload(string $field,array $allowed=['xlsx','xlsm']): string {
+    public static function upload(string $field,array $allowed=['xlsx','xlsm'],?int $maxBytes=30*1024*1024): string {
         $f=$_FILES[$field]??null;
         if (!$f || $f['error']!==UPLOAD_ERR_OK) throw new \RuntimeException("Debe cargar un archivo válido en {$field}.");
-        if ($f['size']>30*1024*1024) throw new \RuntimeException('El archivo supera los 30 MB.');
+        if ($maxBytes!==null && $f['size']>$maxBytes) throw new \RuntimeException('El archivo supera el tamaño permitido para esta herramienta.');
         $ext=strtolower(pathinfo($f['name'],PATHINFO_EXTENSION));
         if (!in_array($ext,$allowed,true)) throw new \RuntimeException('Formato no permitido: '.$ext);
         if (!is_uploaded_file($f['tmp_name'])) throw new \RuntimeException('La carga no es válida.');
@@ -49,7 +49,8 @@ final class Files {
         Auth::requireLogin();
         $stmt=DB::pdo()->prepare('SELECT a.*,j.user_id,j.module FROM artifacts a JOIN jobs j ON j.id=a.job_id WHERE a.id=?');
         $stmt->execute([$id]); $a=$stmt->fetch(); if (!$a) Http::abort(404,'Archivo inexistente.');
-        $perm=$a['module']==='passengers'?'passengers.download':'rotatives.download';
+        $perm=match($a['module']){'passengers'=>'passengers.download','rotatives'=>'rotatives.download','fleets'=>'fleets.download',default=>null};
+        if($perm===null)Http::abort(403,'Módulo de archivo no reconocido.');
         if (!Auth::can($perm)) Http::abort(403,'No tienes autorización para descargar este archivo.');
         if ((int)$a['user_id']!==(int)Auth::user()['id'] && !Auth::can('artifacts.download_all')) Http::abort(403,'No puedes descargar archivos de otros usuarios.');
         $root=realpath(self::root().'/exports');
