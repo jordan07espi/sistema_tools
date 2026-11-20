@@ -49,7 +49,7 @@ final class Files {
         Auth::requireLogin();
         $stmt=DB::pdo()->prepare('SELECT a.*,j.user_id,j.module FROM artifacts a JOIN jobs j ON j.id=a.job_id WHERE a.id=?');
         $stmt->execute([$id]); $a=$stmt->fetch(); if (!$a) Http::abort(404,'Archivo inexistente.');
-        $perm=match($a['module']){'passengers'=>'passengers.download','rotatives'=>'rotatives.download','fleets'=>'fleets.download',default=>null};
+        $perm=match($a['module']){'passengers'=>'passengers.download','rotatives'=>'rotatives.download','fleets'=>'fleets.download','minutes'=>'minutes.download',default=>null};
         if($perm===null)Http::abort(403,'Módulo de archivo no reconocido.');
         if (!Auth::can($perm)) Http::abort(403,'No tienes autorización para descargar este archivo.');
         if ((int)$a['user_id']!==(int)Auth::user()['id'] && !Auth::can('artifacts.download_all')) Http::abort(403,'No puedes descargar archivos de otros usuarios.');

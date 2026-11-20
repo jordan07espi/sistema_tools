@@ -1,0 +1,647 @@
+[
+  {
+    "code": "6",
+    "name": "LINEA 06",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 06",
+        "normalized_name": "LINEA 06"
+      },
+      {
+        "name": "06A RETORNO",
+        "normalized_name": "06A RETORNO"
+      },
+      {
+        "name": "06A SUBIDA",
+        "normalized_name": "06A SUBIDA"
+      },
+      {
+        "name": "06B RETORNO",
+        "normalized_name": "06B RETORNO"
+      },
+      {
+        "name": "06B SUBIDA",
+        "normalized_name": "06B SUBIDA"
+      },
+      {
+        "name": "CRISTO VIVE-TERMINAL TERRESTRE N",
+        "normalized_name": "CRISTO VIVE TERMINAL TERRESTRE N"
+      },
+      {
+        "name": "UNION CIVICA-TERMINAL",
+        "normalized_name": "UNION CIVICA TERMINAL"
+      }
+    ],
+    "points": [
+      {
+        "name": "G.AKI",
+        "normalized_name": "G AKI",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "6C",
+    "name": "LINEA 06C",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 06C",
+        "normalized_name": "LINEA 06C"
+      },
+      {
+        "name": "06C RETORNO",
+        "normalized_name": "06C RETORNO"
+      },
+      {
+        "name": "06C SUBIDA",
+        "normalized_name": "06C SUBIDA"
+      },
+      {
+        "name": "GIRASOLES - PARQUE JELEN TENKA",
+        "normalized_name": "GIRASOLES PARQUE JELEN TENKA"
+      }
+    ],
+    "points": [
+      {
+        "name": "CHEVROLET",
+        "normalized_name": "CHEVROLET",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "7",
+    "name": "LINEA 07",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 07",
+        "normalized_name": "LINEA 07"
+      },
+      {
+        "name": "07 RETORNO",
+        "normalized_name": "07 RETORNO"
+      },
+      {
+        "name": "07 SUBIDA",
+        "normalized_name": "07 SUBIDA"
+      },
+      {
+        "name": "COOP CADENA-HOSPITAL SANTO DOMINGO",
+        "normalized_name": "COOP CADENA HOSPITAL SANTO DOMINGO"
+      }
+    ],
+    "points": [
+      {
+        "name": "CDP",
+        "normalized_name": "CDP",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "10A",
+    "name": "LINEA 10A",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 10A",
+        "normalized_name": "LINEA 10A"
+      },
+      {
+        "name": "10A RETORNO",
+        "normalized_name": "10A RETORNO"
+      },
+      {
+        "name": "10A SUBIDA",
+        "normalized_name": "10A SUBIDA"
+      },
+      {
+        "name": "DISPENSARIO CRISTO VIVE-KASAMA",
+        "normalized_name": "DISPENSARIO CRISTO VIVE KASAMA"
+      }
+    ],
+    "points": [
+      {
+        "name": "CDP",
+        "normalized_name": "CDP",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "10B",
+    "name": "LINEA 10B",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 10B",
+        "normalized_name": "LINEA 10B"
+      },
+      {
+        "name": "10B RETORNO",
+        "normalized_name": "10B RETORNO"
+      },
+      {
+        "name": "10B SUBIDA",
+        "normalized_name": "10B SUBIDA"
+      },
+      {
+        "name": "LOS ARROYOS-KASAMA",
+        "normalized_name": "LOS ARROYOS KASAMA"
+      }
+    ],
+    "points": [
+      {
+        "name": "CDP",
+        "normalized_name": "CDP",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "11A",
+    "name": "LINEA 11A",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 11A",
+        "normalized_name": "LINEA 11A"
+      },
+      {
+        "name": "11A RETORNO",
+        "normalized_name": "11A RETORNO"
+      },
+      {
+        "name": "11A SUBIDA",
+        "normalized_name": "11A SUBIDA"
+      },
+      {
+        "name": "PLORETARIADO-PARQUE JELEN TENKA",
+        "normalized_name": "PLORETARIADO PARQUE JELEN TENKA"
+      }
+    ],
+    "points": [
+      {
+        "name": "CHEVROLET",
+        "normalized_name": "CHEVROLET",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "11B",
+    "name": "LINEA 11B",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 11B",
+        "normalized_name": "LINEA 11B"
+      },
+      {
+        "name": "L11B RETORNO",
+        "normalized_name": "L11B RETORNO"
+      },
+      {
+        "name": "L11B SUBIDA",
+        "normalized_name": "L11B SUBIDA"
+      },
+      {
+        "name": "NUEVA PROVINCIA-PARQUE JELEN TENKA",
+        "normalized_name": "NUEVA PROVINCIA PARQUE JELEN TENKA"
+      }
+    ],
+    "points": [
+      {
+        "name": "T NUEVA PROVINCIA",
+        "normalized_name": "T NUEVA PROVINCIA",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "11C",
+    "name": "LINEA 11C",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 11C",
+        "normalized_name": "LINEA 11C"
+      },
+      {
+        "name": "ALIMENTADOR",
+        "normalized_name": "ALIMENTADOR"
+      }
+    ],
+    "points": []
+  },
+  {
+    "code": "16",
+    "name": "LINEA 16",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 16",
+        "normalized_name": "LINEA 16"
+      },
+      {
+        "name": "16CH BAJADA",
+        "normalized_name": "16CH BAJADA"
+      },
+      {
+        "name": "16CH SUBIDA",
+        "normalized_name": "16CH SUBIDA"
+      },
+      {
+        "name": "16MM BAJADA",
+        "normalized_name": "16MM BAJADA"
+      },
+      {
+        "name": "16MM SUBIDA",
+        "normalized_name": "16MM SUBIDA"
+      },
+      {
+        "name": "CHIGUILPE-TERMINAL TERRESTRE",
+        "normalized_name": "CHIGUILPE TERMINAL TERRESTRE"
+      },
+      {
+        "name": "MAYA MONCAYO-TERMINAL TERRESTRE",
+        "normalized_name": "MAYA MONCAYO TERMINAL TERRESTRE"
+      }
+    ],
+    "points": [
+      {
+        "name": "KFC",
+        "normalized_name": "KFC",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      },
+      {
+        "name": "S.LELIA",
+        "normalized_name": "S LELIA",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 100,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "17",
+    "name": "LINEA 17",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 17",
+        "normalized_name": "LINEA 17"
+      },
+      {
+        "name": "17A RETORNO",
+        "normalized_name": "17A RETORNO"
+      },
+      {
+        "name": "17A UTE SUBIDA",
+        "normalized_name": "17A UTE SUBIDA"
+      },
+      {
+        "name": "17B GASOLINERA SUBIDA",
+        "normalized_name": "17B GASOLINERA SUBIDA"
+      },
+      {
+        "name": "17B RETORNO",
+        "normalized_name": "17B RETORNO"
+      },
+      {
+        "name": "QUEZADA - PORTAL",
+        "normalized_name": "QUEZADA PORTAL"
+      },
+      {
+        "name": "UTE - PORTAL",
+        "normalized_name": "UTE PORTAL"
+      }
+    ],
+    "points": [
+      {
+        "name": "MONTONEROS",
+        "normalized_name": "MONTONEROS",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 100,
+        "tolerance_minutes": 0
+      },
+      {
+        "name": "ORANGINE",
+        "normalized_name": "ORANGINE",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      },
+      {
+        "name": "S. ANITA",
+        "normalized_name": "S ANITA",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 100,
+        "tolerance_minutes": 0
+      },
+      {
+        "name": "KASAMA",
+        "normalized_name": "KASAMA",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 100,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "18",
+    "name": "LINEA 18",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 18",
+        "normalized_name": "LINEA 18"
+      },
+      {
+        "name": "18A KM 8 RETORNO",
+        "normalized_name": "18A KM 8 RETORNO"
+      },
+      {
+        "name": "18A KM 8 SUBIDA",
+        "normalized_name": "18A KM 8 SUBIDA"
+      },
+      {
+        "name": "18B KM 7 RETORNO",
+        "normalized_name": "18B KM 7 RETORNO"
+      },
+      {
+        "name": "18B KM 7 SUBIDA",
+        "normalized_name": "18B KM 7 SUBIDA"
+      },
+      {
+        "name": "VIA QUEVEDO KM 7 - TERMINAL TERRESTRE",
+        "normalized_name": "VIA QUEVEDO KM 7 TERMINAL TERRESTRE"
+      },
+      {
+        "name": "VIA QUEVEDO KM 8 - TERMINAL TERRESTRE",
+        "normalized_name": "VIA QUEVEDO KM 8 TERMINAL TERRESTRE"
+      }
+    ],
+    "points": [
+      {
+        "name": "MAINPRO",
+        "normalized_name": "MAINPRO",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 100,
+        "tolerance_minutes": 0
+      },
+      {
+        "name": "TSA/GUAY",
+        "normalized_name": "TSA GUAY",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 100,
+        "tolerance_minutes": 0
+      },
+      {
+        "name": "ENT. PUERTO LIMON",
+        "normalized_name": "ENT PUERTO LIMON",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 100,
+        "tolerance_minutes": 0
+      },
+      {
+        "name": "CHEVROLET",
+        "normalized_name": "CHEVROLET",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "19",
+    "name": "LINEA 19",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 19",
+        "normalized_name": "LINEA 19"
+      },
+      {
+        "name": "DURAGAS-SHOPPING",
+        "normalized_name": "DURAGAS SHOPPING"
+      },
+      {
+        "name": "SALIDA DURAGAS",
+        "normalized_name": "SALIDA DURAGAS"
+      },
+      {
+        "name": "SALIDA SHOOPING",
+        "normalized_name": "SALIDA SHOOPING"
+      }
+    ],
+    "points": []
+  },
+  {
+    "code": "20",
+    "name": "LINEA 20",
+    "base": 8,
+    "base_rate_cents": 50,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 20",
+        "normalized_name": "LINEA 20"
+      },
+      {
+        "name": "20 RETORNO",
+        "normalized_name": "20 RETORNO"
+      },
+      {
+        "name": "20 SUBIDA",
+        "normalized_name": "20 SUBIDA"
+      },
+      {
+        "name": "CIUDAD VERDE - TERMINAL TERRESTRE",
+        "normalized_name": "CIUDAD VERDE TERMINAL TERRESTRE"
+      }
+    ],
+    "points": [
+      {
+        "name": "CDP",
+        "normalized_name": "CDP",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  },
+  {
+    "code": "23A",
+    "name": "LINEA 23A",
+    "base": 0,
+    "base_rate_cents": 50,
+    "direct_rate_cents": 100,
+    "aliases": [
+      {
+        "name": "LINEA 23A",
+        "normalized_name": "LINEA 23A"
+      },
+      {
+        "name": "JUAN EULOGIO SECTOR 2",
+        "normalized_name": "JUAN EULOGIO SECTOR 2"
+      }
+    ],
+    "points": [
+      {
+        "name": "2.URB EL BOYAL",
+        "normalized_name": "URB EL BOYAL",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": null,
+        "tolerance_minutes": 1
+      },
+      {
+        "name": "10.ABRAHAM CALAZACON Y PERIPA",
+        "normalized_name": "ABRAHAM CALAZACON Y PERIPA",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": null,
+        "tolerance_minutes": 1
+      },
+      {
+        "name": "11.SMF. GAS.EXPUMA",
+        "normalized_name": "SMF GAS EXPUMA",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": null,
+        "tolerance_minutes": 1
+      }
+    ]
+  },
+  {
+    "code": "23B",
+    "name": "LINEA 23B",
+    "base": 0,
+    "base_rate_cents": 50,
+    "direct_rate_cents": 100,
+    "aliases": [
+      {
+        "name": "LINEA 23B",
+        "normalized_name": "LINEA 23B"
+      },
+      {
+        "name": "JUAN EULOGIO-16 DE MARZO",
+        "normalized_name": "JUAN EULOGIO 16 DE MARZO"
+      },
+      {
+        "name": "MUNICIPAL RETORNO",
+        "normalized_name": "MUNICIPAL RETORNO"
+      },
+      {
+        "name": "SAO PAULO RETORNO",
+        "normalized_name": "SAO PAULO RETORNO"
+      },
+      {
+        "name": "SECTOR 3 -SAO PAULO",
+        "normalized_name": "SECTOR 3 SAO PAULO"
+      },
+      {
+        "name": "SECTOR 3-MUNICIPAL",
+        "normalized_name": "SECTOR 3 MUNICIPAL"
+      },
+      {
+        "name": "VUELTA VELADA JUAN EULOGIO SECTOR 3",
+        "normalized_name": "VUELTA VELADA JUAN EULOGIO SECTOR 3"
+      }
+    ],
+    "points": []
+  },
+  {
+    "code": "24",
+    "name": "LINEA 24",
+    "base": 8,
+    "base_rate_cents": 100,
+    "direct_rate_cents": null,
+    "aliases": [
+      {
+        "name": "LINEA 24",
+        "normalized_name": "LINEA 24"
+      },
+      {
+        "name": "ANILLO VIAL- TSAFIQUI",
+        "normalized_name": "ANILLO VIAL TSAFIQUI"
+      },
+      {
+        "name": "ANILLO VIAL-EX FABRICA",
+        "normalized_name": "ANILLO VIAL EX FABRICA"
+      }
+    ],
+    "points": [
+      {
+        "name": "MERIDIAN CAR",
+        "normalized_name": "MERIDIAN CAR",
+        "point_number": 0,
+        "sanction": "inherit",
+        "rate_cents": 200,
+        "tolerance_minutes": 0
+      }
+    ]
+  }
+]

@@ -1,6 +1,9 @@
 <?php
 use App\Core\Http;
 $permissionNames=[
+ 'minutes.view'=>'Ver reporte de minutos caídos',
+ 'minutes.generate'=>'Generar reporte de minutos caídos',
+ 'minutes.download'=>'Descargar reporte de minutos caídos',
  'fleets.view'=>'Ver promedios de flotas',
  'fleets.generate'=>'Generar promedios de flotas',
  'fleets.download'=>'Descargar promedios de flotas',

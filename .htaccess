@@ -18,6 +18,9 @@ RewriteRule ^(composer\.(json|lock)|Dockerfile|docker-compose.*|.*\.(sql|log|bak
 RewriteRule ^(?!index\.php$).+\.php$ - [F,L,NC]
 
 # 2. Enrutador MVC: Sirve recursos públicos directamente, envía el resto a index.php
+# Compatibilidad del hosting Linux: las URLs /assets/ usan la carpeta Assets/.
+RewriteRule ^assets/(.*)$ Assets/$1 [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]

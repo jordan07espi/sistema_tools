@@ -6,6 +6,7 @@ date_default_timezone_set($appConfig['timezone']);
 use App\Core\{Auth,Http,Files};
 use App\Controllers\{AuthController,PassengerController,RotativoController,UserController,HistoryController,RouteController};
 use App\Controllers\FleetAverageController;
+use App\Controllers\{MinutesController,MinutesConfigController};
 ini_set('session.use_strict_mode','1');
 $secure=!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=='off';
 session_name('EJECUTTRANS_SESSION');
@@ -31,6 +32,11 @@ try {
     elseif ($method==='GET'&&$path==='/dashboard'){
         Auth::requireLogin();Http::view('dashboard/index',['title'=>'Panel principal']);
     }
+    elseif ($method==='GET'&&$path==='/minutos')MinutesController::index();
+    elseif ($method==='POST'&&$path==='/minutos/generar')MinutesController::generate();
+    elseif ($method==='GET'&&$path==='/puntos-control')MinutesConfigController::index();
+    elseif ($method==='POST'&&$path==='/puntos-control/linea')MinutesConfigController::saveLine();
+    elseif ($method==='POST'&&$path==='/puntos-control/punto')MinutesConfigController::savePoint();
     elseif ($method==='GET'&&$path==='/flotas')FleetAverageController::index();
     elseif ($method==='POST'&&$path==='/flotas/generar')FleetAverageController::generate();
     elseif ($method==='GET'&&$path==='/pasajeros')PassengerController::index();

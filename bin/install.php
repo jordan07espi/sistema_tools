@@ -11,3 +11,4 @@ foreach (['database/schema.sql','database/seed_permissions.sql','database/seed_a
     echo "Ejecutado: $file\n";
 }
 echo "Base inicializada correctamente.\n";
+require __DIR__.'/upgrade_minutes.php';

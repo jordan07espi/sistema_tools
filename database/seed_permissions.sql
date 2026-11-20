@@ -1,4 +1,5 @@
 INSERT IGNORE INTO role_permissions (role, permission) VALUES
+('monitoreo','minutes.view'),('monitoreo','minutes.generate'),('monitoreo','minutes.download'),
 ('monitoreo','fleets.view'),('monitoreo','fleets.generate'),('monitoreo','fleets.download'),
 ('monitoreo','passengers.view'),('monitoreo','passengers.generate'),('monitoreo','passengers.download'),
 ('monitoreo','rotatives.view'),('monitoreo','rotatives.generate'),('monitoreo','rotatives.download'),
