@@ -20,7 +20,7 @@ INSERT IGNORE INTO routes(name,normalized_name,code_weekdays,code_weekend,code_s
 ('LINEA 23B.-  JUAN EULOGIO - 16 DE MARZO','LINEA 23B.- JUAN EULOGIO - 16 DE MARZO','L23BLV','','L23BS','L23BD','L23B');
 
 INSERT IGNORE INTO corridor_rules (corridor,route_prefix,tab_start,tab_end) VALUES
- ('Quevedo','LINEA 23A',4,6),('Santa Martha','LINEA 23B',6,10);
+ ('Quevedo','LINEA 23A',4,6),('Santa Martha','LINEA 19',4,6),('Santa Martha','LINEA 23B',6,10);
 INSERT IGNORE INTO unified_route_groups (id,group_code,filename) VALUES
  (1,'LINEA 18','LINEA 18.csv');
 INSERT IGNORE INTO unified_route_members (group_id,route_normalized,sort_order) VALUES

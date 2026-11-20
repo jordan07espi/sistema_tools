@@ -102,6 +102,7 @@ final class RotativoService {
             }
         }else{
             if ($corridor==='QUEVEDO' && str_starts_with(self::norm($route),'LINEA 23A'))$special=[4,6];
+            if ($corridor==='SANTA MARTHA' && str_starts_with(self::norm($route),'LINEA 19'))$special=[4,6];
             if ($corridor==='SANTA MARTHA' && str_starts_with(self::norm($route),'LINEA 23B'))$special=[6,10];
         }
         $tab=$special?$special[0]:1;$backup=1;$maxTurn=0;$records=[];

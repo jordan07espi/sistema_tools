@@ -23,3 +23,4 @@ try {
     if($pdo->inTransaction())$pdo->rollBack();
     throw $e;
 }
+require __DIR__.'/upgrade_rotatives_corridors.php';

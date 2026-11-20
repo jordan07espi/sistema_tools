@@ -17,6 +17,12 @@ try {
     ensure(count($result['files'])===14 && $result['days']===7,'Siete días y dos rutas');
     ensure($result['date']==='2026-12-28_AL_2027-01-03','Rango semanal');
     ensure(!$result['warnings'],'Sin advertencias en lectura XLSX/MySQL');
+    $santa=RotativoService::runWithDatabase($path,array_merge($settings,['day'=>'TODOS','corridor'=>'Santa Martha']));
+    ensure(count($santa['files'])===14&&$santa['days']===7,'Semana Santa Martha');
+    foreach($santa['files'] as $name=>$csv)if(str_ends_with($name,'LINEA 19 BY PASS.csv')){
+        ensure(str_contains($csv,'turno;4;L19;EJE088')&&str_contains($csv,'turno;6;L19;EJE003'),'L19 Santa Martha Tabs 4–6 todos los días');
+        ensure(!str_contains($csv,'turno;1;L19;'),'Santa Martha no reinicia L19 en 1');
+    }
     $zipPath=tempnam(sys_get_temp_dir(),'rotatives_zip_');
     try {
         $zip=new ZipArchive();
