@@ -17,3 +17,4 @@ echo "Catálogo de rutas listo (sin sobrescribir rutas existentes).\n";
 require __DIR__.'/upgrade_rotatives.php';
 require __DIR__.'/upgrade_fleets.php';
 require __DIR__.'/upgrade_minutes.php';
+require __DIR__.'/upgrade_bankpayments.php';

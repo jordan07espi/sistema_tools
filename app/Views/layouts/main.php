@@ -9,7 +9,8 @@ $canPassengers = !$isGuest && Auth::can('passengers.view');
 $canRotatives = !$isGuest && Auth::can('rotatives.view');
 $canFleets = !$isGuest && Auth::can('fleets.view');
 $canMinutes = !$isGuest && Auth::can('minutes.view');
-$canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotatives.download') || Auth::can('fleets.download') || Auth::can('minutes.download'));
+$canBankPayments = !$isGuest && Auth::can('bankpayments.view');
+$canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotatives.download') || Auth::can('fleets.download') || Auth::can('minutes.download') || Auth::can('bankpayments.download'));
 ?>
 <!doctype html>
 <html lang="es"><head>
@@ -46,6 +47,7 @@ $canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotat
       <p class="admin-nav-heading">Panel de control</p>
       <a href="<?=Http::e(Http::url('/dashboard'))?>" class="min-nav <?= $current === '/dashboard' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-gauge-high w-6 text-center"></i> Inicio</a>
       <p class="admin-nav-heading">Herramientas</p>
+      <?php if ($canBankPayments): ?><a href="<?=Http::e(Http::url('/pagos-bancarios'))?>" class="<?= $isAdmin ? 'min-nav' : '' ?> <?= $current === '/pagos-bancarios' ? ($isAdmin ? 'min-nav-active' : 'portal-nav-active') : '' ?>">Pagos bancarios</a><?php endif; ?>
       <?php if ($canMinutes): ?><a href="<?=Http::e(Http::url('/minutos'))?>" class="min-nav <?= $current === '/minutos' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-stopwatch w-6 text-center"></i> Minutos caídos</a><?php endif; ?>
       <?php if ($canFleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>" class="min-nav <?= $current === '/flotas' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-chart-column w-6 text-center"></i> Promedios de flotas</a><?php endif; ?>
       <?php if ($canPassengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>" class="min-nav <?= $current === '/pasajeros' ? 'min-nav-active' : '' ?>"><i class="fa-solid fa-chart-column w-6 text-center"></i> Reporte de pasajeros</a><?php endif; ?>
@@ -79,6 +81,7 @@ $canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotat
   <div class="portal-header-inner">
     <a class="portal-brand" href="<?=Http::e(Http::url('/dashboard'))?>" aria-label="Inicio de Sistema Tools"><span class="portal-brand-mark"><i class="fa-solid fa-layer-group"></i></span><span>EJECUTTRANS <strong>TOOLS</strong></span></a>
     <nav class="portal-desktop-nav" aria-label="Herramientas">
+      <?php if ($canBankPayments): ?><a href="<?=Http::e(Http::url('/pagos-bancarios'))?>" class="<?= $isAdmin ? 'min-nav' : '' ?> <?= $current === '/pagos-bancarios' ? ($isAdmin ? 'min-nav-active' : 'portal-nav-active') : '' ?>">Pagos bancarios</a><?php endif; ?>
       <?php if ($canMinutes): ?><a href="<?=Http::e(Http::url('/minutos'))?>" class="<?= $current === '/minutos' ? 'portal-nav-active' : '' ?>">Minutos caídos</a><?php endif; ?>
       <?php if ($canFleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>" class="<?= $current === '/flotas' ? 'portal-nav-active' : '' ?>">Promedios de flotas</a><?php endif; ?>
       <a href="<?=Http::e(Http::url('/dashboard'))?>" class="<?= $isHome ? 'portal-nav-active' : '' ?>">Todas las herramientas</a>
@@ -90,7 +93,7 @@ $canHistory = !$isGuest && (Auth::can('passengers.download') || Auth::can('rotat
       <details class="portal-account-details"><summary aria-label="Opciones de mi cuenta"><i class="fa-regular fa-circle-user mr-1"></i><span class="hidden sm:inline"><?=Http::e(explode(' ',trim($user['nombres'] ?? 'Usuario'))[0])?></span><i class="fa-solid fa-chevron-down text-xs ml-1"></i></summary>
         <div class="portal-account-menu"><p class="px-4 py-2 text-xs text-gray-500 border-b break-words"><?=Http::e($user['nombres'].' '.$user['apellidos'])?><span class="block"><?=Http::e($user['role'])?></span></p><a href="<?=Http::e(Http::url('/password'))?>"><i class="fa-solid fa-key mr-2"></i>Cambiar contraseña</a><form method="post" action="<?=Http::e(Http::url('/logout'))?>"><input type="hidden" name="_csrf" value="<?=Http::e(Http::csrf())?>"><button type="submit"><i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar sesión</button></form></div>
       </details>
-      <details class="portal-mobile-nav"><summary aria-label="Ver herramientas"><i class="fa-solid fa-bars"></i></summary><nav class="portal-mobile-links"><a href="<?=Http::e(Http::url('/dashboard'))?>">Todas las herramientas</a><?php if ($canMinutes): ?><a href="<?=Http::e(Http::url('/minutos'))?>">Minutos caídos</a><?php endif; ?><?php if ($canFleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>">Promedios de flotas</a><?php endif; ?><?php if ($canPassengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>">Reporte de pasajeros</a><?php endif; ?><?php if ($canRotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>">Rotativos a CSV</a><?php endif; ?><?php if ($canHistory): ?><a href="<?=Http::e(Http::url('/historial'))?>">Mis archivos</a><?php endif; ?></nav></details>
+      <details class="portal-mobile-nav"><summary aria-label="Ver herramientas"><i class="fa-solid fa-bars"></i></summary><nav class="portal-mobile-links"><a href="<?=Http::e(Http::url('/dashboard'))?>">Todas las herramientas</a><?php if ($canBankPayments): ?><a href="<?=Http::e(Http::url('/pagos-bancarios'))?>">Pagos bancarios</a><?php endif; ?><?php if ($canMinutes): ?><a href="<?=Http::e(Http::url('/minutos'))?>">Minutos caídos</a><?php endif; ?><?php if ($canFleets): ?><a href="<?=Http::e(Http::url('/flotas'))?>">Promedios de flotas</a><?php endif; ?><?php if ($canPassengers): ?><a href="<?=Http::e(Http::url('/pasajeros'))?>">Reporte de pasajeros</a><?php endif; ?><?php if ($canRotatives): ?><a href="<?=Http::e(Http::url('/rotativos'))?>">Rotativos a CSV</a><?php endif; ?><?php if ($canHistory): ?><a href="<?=Http::e(Http::url('/historial'))?>">Mis archivos</a><?php endif; ?></nav></details>
     </div>
   </div>
 </header>

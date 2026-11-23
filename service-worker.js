@@ -1,5 +1,5 @@
 /* PWA: solo recursos estáticos públicos. Los documentos y datos privados NUNCA se guardan. */
-const CACHE='ejecuttrans-tools-cpanel-unico-v6';
+const CACHE='ejecuttrans-tools-cpanel-unico-v7';
 const BASE='/sistema_tools';
 const STATIC=[BASE+'/offline.html',BASE+'/assets/css/tailwind.css',BASE+'/assets/css/app.css',BASE+'/assets/js/app.js',BASE+'/assets/js/passengers.js',BASE+'/assets/js/rotatives.js',BASE+'/assets/js/users.js',BASE+'/assets/js/routes.js',BASE+'/assets/icon.svg',BASE+'/assets/logo-ejecuttrans.png',BASE+'/assets/icons/icon-192.png',BASE+'/assets/icons/icon-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(STATIC)).then(()=>self.skipWaiting()));});

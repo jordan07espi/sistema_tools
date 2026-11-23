@@ -7,6 +7,7 @@ final class UserController {
     public const PERMISSIONS=['passengers.view','passengers.generate','passengers.download',
         'fleets.view','fleets.generate','fleets.download',
         'minutes.view','minutes.generate','minutes.download',
+        'bankpayments.view','bankpayments.generate','bankpayments.download',
         'rotatives.view','rotatives.generate','rotatives.download','routes.view','routes.manage','users.manage','artifacts.download_all'];
     public static function index(): void {
         Auth::requireAdmin();

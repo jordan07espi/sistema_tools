@@ -12,7 +12,7 @@ $multiple=$picker['multiple']??false;
   <div data-upload-zone class="relative rounded-xl border border-slate-200 bg-slate-50 p-5 md:p-6 text-center">
     <input id="<?=Http::e($id)?>" class="sr-only" type="file" name="<?=Http::e($picker['name'])?>" accept="<?=Http::e($picker['accept'])?>" <?= $multiple?'multiple':'' ?> required aria-labelledby="<?=Http::e($id)?>-title" aria-describedby="<?=Http::e($id)?>-help <?=Http::e($id)?>-error">
     <div class="mx-auto mb-3 inline-flex items-center justify-center rounded-xl bg-white border border-blue-100 shadow-sm p-3 text-blue-600" aria-hidden="true"><i class="fa-solid fa-cloud-arrow-up text-2xl"></i></div>
-    <p data-upload-prompt class="font-semibold text-gray-800"><?= $multiple?'Arrastra tus liquidaciones aquí':'Arrastra tu archivo aquí' ?></p>
+    <p data-upload-prompt class="font-semibold text-gray-800"><?=Http::e($picker['prompt']??($multiple?'Arrastra tus liquidaciones aquí':'Arrastra tu archivo aquí'))?></p>
     <p class="text-sm text-gray-500 mt-1 mb-4">o selecciónalo<?= $multiple?'s':'' ?> desde tu equipo</p>
     <button type="button" data-upload-pick class="btn-secondary bg-white" aria-controls="<?=Http::e($id)?>"><i class="fa-solid fa-folder-open mr-2" aria-hidden="true"></i><span data-upload-button-text><?= $multiple?'Seleccionar archivos':'Seleccionar archivo' ?></span></button>
     <p id="<?=Http::e($id)?>-help" class="text-xs text-slate-500 mt-4"><?=Http::e($picker['help'])?></p>

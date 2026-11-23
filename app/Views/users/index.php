@@ -1,6 +1,9 @@
 <?php
 use App\Core\Http;
 $permissionNames=[
+ 'bankpayments.view'=>'Ver consolidación bancaria',
+ 'bankpayments.generate'=>'Consolidar pagos bancarios',
+ 'bankpayments.download'=>'Descargar consolidación bancaria',
  'minutes.view'=>'Ver reporte de minutos caídos',
  'minutes.generate'=>'Generar reporte de minutos caídos',
  'minutes.download'=>'Descargar reporte de minutos caídos',

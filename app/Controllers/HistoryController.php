@@ -6,7 +6,7 @@ final class HistoryController {
     public static function index(): void {
         $user=Auth::requireLogin();
         $modules=[];
-        foreach (['passengers','rotatives','fleets','minutes'] as $module)if (Auth::can($module.'.download'))$modules[]=$module;
+        foreach (['passengers','rotatives','fleets','minutes','bankpayments'] as $module)if (Auth::can($module.'.download'))$modules[]=$module;
         if (!$modules)Http::abort(403,'No tienes permisos para acceder al historial.');
         $placeholders=implode(',',array_fill(0,count($modules),'?'));
         $sql="SELECT a.id,a.filename,a.file_type,a.file_size,a.created_at,j.module,u.cedula,u.nombres,u.apellidos FROM artifacts a

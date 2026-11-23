@@ -6,6 +6,7 @@ date_default_timezone_set($appConfig['timezone']);
 use App\Core\{Auth,Http,Files};
 use App\Controllers\{AuthController,PassengerController,RotativoController,UserController,HistoryController,RouteController};
 use App\Controllers\FleetAverageController;
+use App\Controllers\BankPaymentsController;
 use App\Controllers\{MinutesController,MinutesConfigController};
 ini_set('session.use_strict_mode','1');
 $secure=!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS']!=='off';
@@ -32,6 +33,8 @@ try {
     elseif ($method==='GET'&&$path==='/dashboard'){
         Auth::requireLogin();Http::view('dashboard/index',['title'=>'Panel principal']);
     }
+    elseif ($method==='GET'&&$path==='/pagos-bancarios')BankPaymentsController::index();
+    elseif ($method==='POST'&&$path==='/pagos-bancarios/generar')BankPaymentsController::generate();
     elseif ($method==='GET'&&$path==='/minutos')MinutesController::index();
     elseif ($method==='POST'&&$path==='/minutos/generar')MinutesController::generate();
     elseif ($method==='GET'&&$path==='/puntos-control')MinutesConfigController::index();
