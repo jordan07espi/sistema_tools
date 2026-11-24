@@ -39,6 +39,7 @@ final class RotativoService {
         } finally {$wb->disconnectWorksheets();}
     }
     public static function runWithDatabase(string $rotativo,array $settings): array {
+        self::scheduleDay($settings,'LUNES');
         $dbConfig=RouteRepository::settings();
         $rows=self::loadSheet($rotativo,'Hoja1');
         if (self::norm($settings['day']??'')==='TODOS') {
@@ -76,6 +77,11 @@ final class RotativoService {
         if (in_array($day,array_slice(self::DAYS,0,5),true))return [$route['codigo'],'Lunes - Viernes'];
         if ($day==='SABADO')return $route['sdf']!==''?[$route['sdf'],'Sabado y Domingo']:[$route['sf'],'Sábado'];
         return $route['sdf']!==''?[$route['sdf'],'Sabado y Domingo']:[$route['df'],'Domingo'];
+    }
+    private static function scheduleDay(array $settings,string $day): string {
+        $mode=self::norm($settings['schedule_mode']??'AUTO');
+        if(!in_array($mode,['AUTO','SABADO','DOMINGO'],true))throw new \InvalidArgumentException('Horario no válido. Selecciona normal, sábado o domingo / feriado.');
+        return $mode==='AUTO'?$day:$mode;
     }
     private static function expectedWeek(array $rows): ?string {
         foreach (array_slice($rows,0,12) as $row) {
@@ -139,6 +145,7 @@ final class RotativoService {
     public static function generate(array $rows,array $codeRows,array $settings,array $dbConfig=[]): array {
         $day=self::norm($settings['day']??'');$corridor=self::norm($settings['corridor']??'');
         if (!in_array($day,self::DAYS,true))throw new \InvalidArgumentException('Día no válido.');
+        $scheduleDay=self::scheduleDay($settings,$day);
         if (!in_array($corridor,['QUEVEDO','SANTA MARTHA'],true))throw new \InvalidArgumentException('Corredor no válido.');
         $start=(string)($settings['start_date']??'');
         $startDate=\DateTimeImmutable::createFromFormat('!Y-m-d',$start);
@@ -167,8 +174,8 @@ final class RotativoService {
             }
             if (!$rule){$warnings[]="{$name}: no está configurada en el catálogo de rutas.";continue;}
             if ($rule['codRuta']===''){$warnings[]="{$name}: sin codRuta.";continue;}
-            [$code,$horario]=self::codeForDay($rule,$day);
-            if ($code===''){$warnings[]="{$name}: no tiene código para {$day}.";continue;}
+            [$code,$horario]=self::codeForDay($rule,$scheduleDay);
+            if ($code===''){$warnings[]="{$name}: no tiene código para el horario de {$scheduleDay}.";continue;}
             $beg=$info['index'];$end=isset($routes[$i+1])?$routes[$i+1]['index']-1:count($rows)-1;
             $headerRow=null;
             for ($r=$beg;$r<=min($beg+5,$end);$r++) {
@@ -199,9 +206,12 @@ final class RotativoService {
             $combined=[];$offset=0;
             foreach($blocks as $block){
                 foreach($block['records'] as $record){$record['tab']=$offset+$record['local'];$combined[]=$record;}
-                $offset+=$block['max_turn'];
+                // Línea 18: las filas inactivas al final de un sentido no separan
+                // el siguiente bloque. Las reservas entre turnos activos se conservan.
+                $offset+=$groupName==='LINEA 18'
+                    ? ($block['records']?max(array_column($block['records'],'local')):0)
+                    : $block['max_turn'];
             }
-            if ($groupName==='LINEA 18' && $offset!==28)$warnings[]="LINEA 18 debería tener 28 turnos, pero el rotativo contiene {$offset}.";
             $filename=basename((string)($config['filename']??($groupName.'.csv')));
             if($combined)$files[$filename]=self::csv($date,$blocks[0]['horario'],$blocks[0]['code'],$combined);
             else $warnings[]=$groupName.': sin buses válidos.';

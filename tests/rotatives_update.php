@@ -33,9 +33,8 @@ foreach(['LUNES'=>['LV','2026-12-28','Lunes - Viernes'],'SABADO'=>['S','2027-01-
         ensure(str_starts_with($csv,"\xEF\xBB\xBFcodigo;Tab;codRuta;".$date),'UTF-8 BOM y fecha');
         ensure(str_contains($csv,'flota;;;L18'.$suffix),'Código L18');
         ensure(str_contains($csv,'horario;;;'.$schedule),'Horario');
-        ensure(str_contains($csv,'turno;16;L18;EJE088'),'P/RH reservan posiciones antes del segundo sentido');
-        ensure(str_contains($csv,'turno;28;L18;EJE013'),'Último Tab 28');
-        ensure(!str_contains($csv,'turno;14;')&&!str_contains($csv,'turno;15;'),'Reservados sin fila');
+        ensure(str_contains($csv,'turno;14;L18;EJE088'),'El segundo sentido continúa tras el último turno activo, sin P/RH finales');
+        ensure(str_contains($csv,'turno;26;L18;EJE013'),'Último Tab 26 con dos reservas finales omitidas');
         $csv19=$res['files']['LINEA 19 BY PASS.csv'];
         ensure(str_contains($csv19,'flota;;;L19'.$suffix),'Código L19');
         ensure(substr_count($csv19,'turno;')===3 && str_contains($csv19,'turno;3;L19;EJE003'),'L19 tres turnos');
@@ -45,7 +44,12 @@ foreach(['LUNES'=>['LV','2026-12-28','Lunes - Viernes'],'SABADO'=>['S','2027-01-
 $legacyRows=array_merge(block($oldBack,13),block($oldOut,15,true),block('LINEA 19 BY PASS',3));
 ensure(R::generate($legacyRows,$codes,$settings)['files']===R::generate($rows,$codes,$settings)['files'],'Nombres antiguos compatibles');
 $short=array_merge(block($out,14),block($back,13));
-ensure(str_contains(implode(' ',R::generate($short,$codes,$settings)['warnings']),'contiene 27'),'Advertir cantidad distinta de 28');
+ensure(!R::generate($short,$codes,$settings)['warnings'],'La cantidad de turnos depende del día, sin exigir 28');
+// Una reserva interior sí conserva su posición: no desplazar los turnos activos posteriores.
+$interior=block($out,15);$interior[6][1]='RH';
+$res=R::generate(array_merge($interior,block($back,13)),$codes,$settings);
+ensure(!str_contains($res['files']['LINEA 18.csv'],'turno;5;'),'Reserva interior no exportada');
+ensure(str_contains($res['files']['LINEA 18.csv'],'turno;16;L18;EJE088'),'Bloque completo mantiene continuación 16');
 $missing=array_merge(block($out,15),block('LINEA 19 BY PASS',3));
 ensure(!isset(R::generate($missing,$codes,$settings)['files']['LINEA 18.csv']),'No emitir unificación incompleta');
 echo "OK: líneas 18/19, alias, grupos antiguos, reservas, fines de semana y cambio de año.\n";

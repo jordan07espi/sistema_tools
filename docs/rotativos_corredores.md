@@ -1,5 +1,11 @@
 # Rotativos: actualización por corredor (20/11/2026)
 
+## Horario alternativo para feriados
+
+En Rotativos a CSV se puede elegir `Normal del día seleccionado`, `Usar horario de sábado` o `Usar horario de domingo / feriado`. La fecha, la columna de buses y los turnos se obtienen del día a procesar. El horario alternativo solo cambia el encabezado horario y el código de flota. Se mantiene la prioridad SDF: por ejemplo, un lunes con horario de domingo produce L16D / Domingo y L24SDF / Sabado y Domingo cuando esas son las configuraciones de las rutas.
+
+Si se elige Todos los días, la selección se aplica a toda la semana. Para modificar un único feriado se debe seleccionar ese día. El ZIP identifica el horario alternativo y la selección queda guardada en el historial. No se requieren cambios en la base de datos. `tests/rotatives_schedule.php` verifica fechas, buses, SDF y semana completa.
+
 Reglas verificadas contra `App_Rotativo.py`:
 
 | Corredor | Línea | Tabs |
@@ -10,7 +16,7 @@ Reglas verificadas contra `App_Rotativo.py`:
 
 En estos rangos cada turno no vacío consume una posición, incluso P, RH o un bus inválido. No se exportan esos buses y no se desplazan las posiciones siguientes. Se detiene la lectura al completar el rango. Fuera de las reglas especiales, la numeración empieza en 1 y avanza por bus válido. Los reemplazos como 88R se convierten en EJE088.
 
-Se mantiene la unificación de los dos sentidos de línea 18, sus 28 posiciones y la reserva de posiciones P/RH. Las líneas 18 y 19 mantienen códigos LV/S/D; las demás conservan la prioridad SDF sobre SF o DF.
+La línea 18 une sus dos sentidos y continúa después del último turno activo del primer bloque. Las filas P/RH finales no desplazan el siguiente sentido; las reservas interiores mantienen su posición. No se exige un total fijo de 28: con 8 turnos en el primer sentido y 6 en el segundo, se exportan Tabs 1–14. Las líneas 18 y 19 mantienen códigos LV/S/D; las demás conservan la prioridad SDF sobre SF o DF.
 
 ## Actualización de una instalación existente
 
